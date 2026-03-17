@@ -8,6 +8,9 @@ import { ChatHeader } from '@/components/chat/ChatHeader';
 import { MessageList } from '@/components/chat/MessageList';
 import { MessageComposer } from '@/components/chat/MessageComposer';
 import { notFound } from 'next/navigation';
+import { Message } from '@/lib/types';
+
+const EMPTY: Message[] = [];
 
 export default function ChatPage({
   params,
@@ -18,7 +21,7 @@ export default function ChatPage({
   const abortRef = useRef<AbortController | null>(null);
 
   const chat = useChatStore((s) => s.chats.find((c) => c.id === chatId));
-  const messages = useChatStore((s) => s.messages[chatId] ?? []);
+  const messages = useChatStore((s) => s.messages[chatId] ?? EMPTY);
   const participants = useParticipantStore((s) => s.participants);
 
   if (!chat) return notFound();
